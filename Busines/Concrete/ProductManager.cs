@@ -1,4 +1,5 @@
 ﻿using Busines.Abstract;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entity.Concrete;
 using Entity.DTOs;
@@ -20,14 +21,17 @@ namespace Busines.Concrete
             _productDal = productDal;
         }
 
-        public void Add(Product product)
+        public IResult Add(Product product)
         {
+
             _productDal.Add(product);
+            return new Result(true, "Ürün eklendi.");
         }
 
-        public void Delete(Product product)
+        public IResult Delete(Product product)
         {
             _productDal.Delete(product);
+            return new Result();
         }
 
         public List<Product> GetAll()
