@@ -12,13 +12,15 @@ namespace Busines.Abstract
     public interface IProductService
     {
         IResult Add(Product product);
-        void Update(Product product);
-        void Delete(Product product);
-        Product GetByProductId(int productId);
-        List<Product> GetAll();
-        List<Product> GetAllByCategoryId(int categoryId);
-        List<Product> GetAllByUnitPrice(decimal min, decimal max);
-        List<ProductDetailDto> GetProductDetails();
+        IResult Update(Product product);
+        IResult Delete(Product product);
+
+        IDataResult<Product> GetByProductId(int productId);
+
+        IDataResult<List<Product>> GetAll();
+        IDataResult<List<Product>> GetAllByCategoryId(int categoryId);
+        IDataResult<List<Product>> GetAllByUnitPrice(decimal min, decimal max);
+        IDataResult<List<ProductDetailDto>> GetProductDetails();
 
     }
 }

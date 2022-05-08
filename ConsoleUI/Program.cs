@@ -8,7 +8,7 @@ using DataAccess.Concrete.EntityFramework;
 Console.WriteLine("Hello, World!");
 
 ProductDetailTest();
-CategoryTest();
+//CategoryTest();
 
 
 
@@ -17,12 +17,20 @@ CategoryTest();
 static void ProductDetailTest()
 {
     ProductManager productManager = new(new EfProductDal());
-    var detailResult = productManager.GetProductDetails();
+    var result = productManager.GetProductDetails();
 
-    foreach (var product in detailResult)
+    if (result.Success)
     {
-        Console.WriteLine($"{product.ProductName} - {product.CategoryName}");
+        foreach (var product in result.Data)
+        {
+            Console.WriteLine($"{product.ProductName} - {product.CategoryName}");
+        }
     }
+    else
+    {
+        Console.WriteLine(result.Message);
+    }
+
     Console.WriteLine("\n\n\n\n");
 }
 
