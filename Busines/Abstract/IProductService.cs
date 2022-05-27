@@ -14,9 +14,7 @@ namespace Busines.Abstract
         IResult Add(Product product);
         IResult Update(Product product);
         IResult Delete(Product product);
-
         IDataResult<Product> GetByProductId(int productId);
-
         IDataResult<List<Product>> GetAll();
         IDataResult<List<Product>> GetAllByCategoryId(int categoryId);
         IDataResult<List<Product>> GetAllByUnitPrice(decimal min, decimal max);
