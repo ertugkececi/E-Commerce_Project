@@ -1,9 +1,13 @@
 ﻿using Busines.Abstract;
 using Busines.Constants;
+using Busines.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entity.Concrete;
 using Entity.DTOs;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,15 +26,9 @@ namespace Busines.Concrete
             _productDal = productDal;
         }
 
-
-        #region Return type of "void" methods
-
+        [ValidationAspect(typeof(ProductValidator))]
         public IResult Add(Product product)
         {
-            if (product.ProductName.Length < 2)
-            {
-                return new ErrorResult(Messages.ProductNameInvalid);
-            }
             _productDal.Add(product);
 
             return new SuccessResult(Messages.ProductAdded);
@@ -48,10 +46,6 @@ namespace Busines.Concrete
             return new SuccessResult(Messages.ProductUpdated);
         }
 
-        #endregion
-
-        #region Return type of "Product" methods
-
         public IDataResult<Product> GetByProductId(int productId)
         {
             if (DateTime.Now.Hour == 21)
@@ -61,9 +55,6 @@ namespace Busines.Concrete
             return new SuccessDataResult<Product>(_productDal.Get(p => p.ProductId == productId), Messages.ProductsListed);
         }
 
-        #endregion
-
-        #region Return type of "List of Product" methods
         public IDataResult<List<Product>> GetAll()
         {
             if (DateTime.Now.Hour == 21)
@@ -91,10 +82,6 @@ namespace Busines.Concrete
             return new SuccessDataResult<List<Product>>(_productDal.GetAll(p => p.UnitPrice >= min && p.UnitPrice <= max), Messages.ProductsListed);
         }
 
-        #endregion
-
-        #region Return type of "DTO" methods
-
         public IDataResult<List<ProductDetailDto>> GetProductDetails()
         {
             if (DateTime.Now.Hour == 21)
@@ -103,8 +90,5 @@ namespace Busines.Concrete
             }
             return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetailDtos(), Messages.ProductsListed);
         }
-
-        #endregion
-
     }
 }
