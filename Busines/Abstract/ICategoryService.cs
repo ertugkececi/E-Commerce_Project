@@ -1,4 +1,5 @@
-﻿using Entity.Concrete;
+﻿using Core.Utilities.Results;
+using Entity.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Busines.Abstract
         void Add(Category category);
         void Update(Category category);
         void Delete(Category category);
-        Category GetByCategoryId(int categoryId);
-        List<Category> GetAll();
+        IDataResult<Category> GetByCategoryId(int categoryId);
+        IDataResult<List<Category>> GetAll();
     }
 }
